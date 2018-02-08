@@ -20,7 +20,7 @@ def trap(f,a,b,r0,k0):
     a = np.asarray(a)
     b = np.asarray(b)
     return np.linalg.norm(b-a)/2*(f(a,r0,k0) + f(b,r0,k0))
-"""
+
 def rug(x):
     if (x>=0 and x<=1):
         return [x,0]
@@ -29,20 +29,22 @@ def rug(x):
     elif (x>2 and x <=3):
         return [x,-x+3]
     else:
-        return [x,0]"""
+        return [x,0]
         
-    
+
 def rug(x):
-    return (x,.3*np.sin(x*2))
+    return (x,.0*np.sin(10*x))
     
 def p(x):
     """Calcule la pression en n'importe quel point du domaine."""
+    #Pour l'instant, le paramètre beta ne fait rien. Je vais donc l'enlever et voir si quelque chose se passe...
     global ps,N,source,k0,points,surfaces,beta
     x = np.asarray(x)
     y = G(x,source,k0)
     for j in range(N-1):
         a,b = points[surfaces[j]]
-        y-= ps[j] * (1j)*k0*beta*trap(G,a,b,x,k0) + trap(Gd,a,b,x,k0)
+        y -= ps[j] * ((1j)*k0*beta*trap(G,a,b,x,k0) + trap(Gd,a,b,x,k0))
+        #y -= ps[j] * (1j)*k0*beta*trap(G,a,b,x,k0) + trap(Gd,a,b,x,k0)
     return y
     
     
@@ -51,7 +53,7 @@ N = 200 #Nombre de points de discrétisation
 w0 = 2*np.pi*200 #Fréquence angulaire
 c0 = 340 #Vitesse du son
 k0 = w0/c0
-alpha = 1 #Amplitude et phase de la source
+alpha = 20 #Amplitude et phase de la source
 
 source = np.array([1,3])
 
@@ -61,7 +63,7 @@ points = np.asarray([rug(elm) for elm in space])
 surfaces = np.asarray([[i,i+1] for i in range(N-1)])
 
 #COEFFICIENT D'ABSORBTION DE L'INTERFACE
-beta = 0
+beta = 1
 
 #RESOLUTION DE LA PRESSION A LA SURFACE
 print "Construction de la matrice de résolution..."
@@ -94,5 +96,5 @@ duration = time() - start
 print "Fini!"
 print "La simulation a pris {}s".format(duration)
 plt.imshow(np.real(z),cmap='winter')
-plt.colorbar()
+pxlt.colorbar()
 plt.show()

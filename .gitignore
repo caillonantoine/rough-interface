@@ -3,3 +3,5 @@ RAPPORT/
 main
 *.out
 *.png
+.floydexpt
+.floydignore
