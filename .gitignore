@@ -5,3 +5,5 @@ main
 *.png
 .floydexpt
 .floydignore
+*.msh
+*.pyc

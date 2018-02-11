@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import scipy.special as ss
 from scipy.linalg import solve
 from time import time
+from mshloader import load
 
 start = time()
 
@@ -20,81 +21,74 @@ def trap(f,a,b,r0,k0):
     a = np.asarray(a)
     b = np.asarray(b)
     return np.linalg.norm(b-a)/2*(f(a,r0,k0) + f(b,r0,k0))
-
-def rug(x):
-    if (x>=0 and x<=1):
-        return [x,0]
-    elif (x>1 and x<=2):
-        return [x,x-1]
-    elif (x>2 and x <=3):
-        return [x,-x+3]
-    else:
-        return [x,0]
-        
-
-def rug(x):
-    return (x,.0*np.sin(10*x))
     
 def p(x):
     """Calcule la pression en n'importe quel point du domaine."""
-    #Pour l'instant, le paramètre beta ne fait rien. Je vais donc l'enlever et voir si quelque chose se passe...
     global ps,N,source,k0,points,surfaces,beta
     x = np.asarray(x)
     y = G(x,source,k0)
-    for j in range(N-1):
+    for j in range(M):
         a,b = points[surfaces[j]]
         y -= ps[j] * ((1j)*k0*beta*trap(G,a,b,x,k0) + trap(Gd,a,b,x,k0))
-        #y -= ps[j] * (1j)*k0*beta*trap(G,a,b,x,k0) + trap(Gd,a,b,x,k0)
     return y
     
     
 #DEFINITION DES PARAMETRES DU PROBLEME
-N = 200 #Nombre de points de discrétisation
-w0 = 2*np.pi*200 #Fréquence angulaire
+w0 = 2*np.pi*900 #Fréquence angulaire
 c0 = 340 #Vitesse du son
+p_0 = 1 #Masse volumique du fluide
 k0 = w0/c0
-alpha = 20 #Amplitude et phase de la source
+alpha = 1 #Amplitude et phase de la source
 
-source = np.array([1,3])
+source = np.array([4,3])
 
 #CREATION DE L'INTERFACE
-space = np.linspace(0,4,N)
-points = np.asarray([rug(elm) for elm in space])
-surfaces = np.asarray([[i,i+1] for i in range(N-1)])
-
+points,surfaces = load('rough_1_s.msh')
+N = len(points)
+M = len(surfaces)
 #COEFFICIENT D'ABSORBTION DE L'INTERFACE
-beta = 1
-
+beta = 1000
 #RESOLUTION DE LA PRESSION A LA SURFACE
 print "Construction de la matrice de résolution..."
-As = np.zeros([N-1,N-1],dtype=complex)
+As = np.zeros([M,M],dtype=complex)
 r = []
-for i in range(N-1):
+for i in range(M):
     r0 = (points[surfaces[i][0]]+points[surfaces[i][1]])/2
     r.append(r0)
-    for j in range(N-1):
+    for j in range(M):
         a,b = points[surfaces[j]]
         As[i,j] = 1j*k0*beta*trap(G,a,b,r0,k0) + trap(Gd,a,b,r0,k0)
 
 print "Résolution..."
 r = np.asarray(r)
-ps = solve(.5*np.eye(N-1) + As,[alpha*G(ri,source,k0) for ri in r])
+ps = solve(.5*np.eye(M) + As,[alpha*G(ri,source,k0) for ri in r])
 
 #RESOLUTION DE L'IMAGE EN SORTIE
-res = 100
+res = 500
 
 print "Calcul de la pression sur un domaine de {}x{} points...".format(res,res)
-x = np.linspace(-1,5,res)
-y = np.linspace(-1,5,res)
+
+extent = [-1,6,-1,6]
+x = np.linspace(extent[0],extent[1],res)
+y = np.linspace(extent[2],extent[3],res)
 z = np.zeros([res,res],dtype=complex)
 for i in range(res):
     for j in range(res):
         z[i,j] = p([x[i],y[j]])
         
 duration = time() - start
-
+#%%
 print "Fini!"
-print "La simulation a pris {}s".format(duration)
-plt.imshow(np.real(z),cmap='winter')
-pxlt.colorbar()
+print "La simulation a pris {}s".format(int(duration))
+plt.subplot(1,2,1)
+plt.imshow(np.real(z),cmap='winter',extent=extent,origin='lower')
+plt.plot(points[:,1],points[:,0],'r.')
+plt.axis(extent)
+plt.savefig('test.png')
+plt.title('Partie reelle')
+plt.subplot(1,2,2)
+plt.imshow(np.abs(z),cmap='winter',extent=extent,origin='lower')
+plt.plot(points[:,1],points[:,0],'r.')
+plt.axis(extent)
+plt.title('Module')
 plt.show()
