@@ -106,7 +106,7 @@ print 'Résolution'
 ps = solve(.5*np.eye(len(elements))+A,B)
 
 print 'Calcul'
-res = 300
+res = 30
 
 extent = [-2,6,-2,6]
 
@@ -119,7 +119,7 @@ for i in range(res):
         z[i,j] = p([x[i],y[j]],r,ps,source,1,elements,points,n,omega,beta)
 print 'Affichage'
 #%%
-plt.imshow(np.real(z),extent=extent,origin='lower',vmin-.2,vmax=.2,cmap='coolwarm')
+plt.imshow(np.real(z),extent=extent,origin='lower',vmin=-.2,vmax=.2,cmap='Blues')
 plt.plot(points[:,1],points[:,0],'w.')
 plt.colorbar()
 plt.show()
