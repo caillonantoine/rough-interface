@@ -64,7 +64,7 @@ r = np.asarray(r)
 ps = solve(.5*np.eye(M) + As,[alpha*G(ri,source,k0) for ri in r])
 
 #RESOLUTION DE L'IMAGE EN SORTIE
-res = 500
+res = 70
 
 print "Calcul de la pression sur un domaine de {}x{} points...".format(res,res)
 
