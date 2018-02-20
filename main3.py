@@ -106,7 +106,7 @@ print 'Résolution'
 ps = solve(.5*np.eye(len(elements))+A,B)
 
 print 'Calcul'
-res = 30
+res = 80
 
 extent = [-2,6,-2,6]
 
