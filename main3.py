@@ -76,7 +76,8 @@ def p(x,r,ps,source,amplitude,elements,points,normal,omega,beta,c=340):
     """implémentation de l'équation (14)"""
     k = omega/c
     x = np.asarray(x)
-    y = amplitude*Green(x,source,k)
+    #y = amplitude*Green(x,source,k)
+    y = 0
     for i,o in enumerate(elements):
         a,b = points[o]
         aire = norm(b-a)
@@ -106,7 +107,7 @@ print 'Résolution'
 ps = solve(.5*np.eye(len(elements))+A,B)
 
 print 'Calcul'
-res = 80
+res = 100
 
 extent = [-2,6,-2,6]
 
@@ -121,10 +122,12 @@ print 'Affichage'
 #%%
 plt.imshow(np.real(z),extent=extent,origin='lower',vmin=-.2,vmax=.2,cmap='Blues')
 plt.plot(points[:,1],points[:,0],'w.')
+plt.axis(extent)
 plt.colorbar()
 plt.show()
 
 plt.imshow(abs(z),extent=extent,origin='lower',cmap='autumn')
 plt.plot(points[:,1],points[:,0],'w.')
+plt.axis(extent)
 plt.colorbar()
 plt.show()
