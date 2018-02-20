@@ -87,7 +87,7 @@ def p(x,r,ps,source,amplitude,elements,points,normal,omega,beta,c=340):
     
 #On définit les paramètres du problème
 points,elements = load('rough_1_s.msh')
-source = np.array([4,3])
+source = np.array([2,3])
 f = 500
 omega = 2*np.pi*f
 beta=0
@@ -120,12 +120,14 @@ for i in range(res):
         z[i,j] = p([x[i],y[j]],r,ps,source,1,elements,points,n,omega,beta)
 print 'Affichage'
 #%%
+plt.scatter(source[1],source[0],c='w')
 plt.imshow(np.real(z),extent=extent,origin='lower',vmin=-.2,vmax=.2,cmap='Blues')
 plt.plot(points[:,1],points[:,0],'w.')
 plt.axis(extent)
 plt.colorbar()
 plt.show()
 
+plt.scatter(source[1],source[0],c='w')
 plt.imshow(abs(z),extent=extent,origin='lower',cmap='autumn')
 plt.plot(points[:,1],points[:,0],'w.')
 plt.axis(extent)
