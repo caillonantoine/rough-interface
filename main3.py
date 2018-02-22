@@ -76,23 +76,25 @@ def p(x,r,ps,source,amplitude,elements,points,normal,omega,beta,c=340):
     """implémentation de l'équation (14)"""
     k = omega/c
     x = np.asarray(x)
-    #y = amplitude*Green(x,source,k)
+    y = amplitude*Green(x,source,k)
     y = 0
     for i,o in enumerate(elements):
         a,b = points[o]
         aire = norm(b-a)
         n = normal[i]
-        y -= ps[i] *aire*(np.dot(deltaGreen(x,r[i],k),n))
+        y -= ps[i] *aire*(np.dot(deltaGreen(x,r[i],k),n)) #vectoriser
     return y
     
 #On définit les paramètres du problème
-points,elements = load('rough_1_s.msh')
+points,elements = load('/home/antoine/untitled.msh')
 source = np.array([2,3])
 f = 500
 omega = 2*np.pi*f
 beta=0
+
 #On calcul les normales de chaque élement
 n,(x,y) = compute_normal(elements,points,source)
+
 #...Puis on affiche la configuration
 print 'Affichage de la configuration'
 show_all(points,n,x,y,source)
@@ -107,7 +109,7 @@ print 'Résolution'
 ps = solve(.5*np.eye(len(elements))+A,B)
 
 print 'Calcul'
-res = 100
+res = 60
 
 extent = [-2,6,-2,6]
 
