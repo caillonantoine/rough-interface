@@ -8,14 +8,14 @@ def Green(r,r0,k):
     """Fonction de Green 2D en fonction de r,r0 et du nombre d'onde k"""
     r,r0 = np.asarray(r),np.asarray(r0)
     R = norm(r-r0)
-    return -1j/4 * hankel1(0,k*R)
+    return 1/(2*np.pi*R)*np.exp(1j*k*R)
 
 def deltaGreen(r,r0,k):
     """gradient de la fonction de Green 2D en fonction de r,r0 et
     du nombre d'onde k"""
     r,r0 = np.asarray(r),np.asarray(r0)
     R = norm(r-r0)
-    return -1j/4 * k * hankel1(1,k*R) * (r-r0)/R
+    return 1/(2*np.pi*R**3)*(r-r0)*(R**2-1)*np.exp(1j*k*R)
 
 def get_AB(points,elements,normal,source,amplitude,omega,c=340):
     """Renvoie les matrices A et B en fonction de:

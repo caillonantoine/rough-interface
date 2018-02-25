@@ -12,3 +12,4 @@ def show_all(points,n,x,y,source=None):
     """Affiche toute la configuration, y compris les normales aux élements"""
     show(points,source)
     plt.quiver(x,y,n[:,0],n[:,1],width=0.005)
+    plt.show()

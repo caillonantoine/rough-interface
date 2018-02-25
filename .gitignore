@@ -1,9 +1,10 @@
 DOCUMENTATION/
 RAPPORT/
-CPP/
-main
 *.out
 *.png
 .floydexpt
 .floydignore
 *.pyc
+*.o
+*.so
+
