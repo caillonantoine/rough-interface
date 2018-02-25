@@ -1,21 +1,21 @@
 #coding:utf-8
+import bemf
 
 from numpy.linalg import norm,solve
 import numpy as np
-from scipy.special import hankel1
+from scipy.special import hankel1,yn,jn
 
 def Green(r,r0,k):
     """Fonction de Green 2D en fonction de r,r0 et du nombre d'onde k"""
     r,r0 = np.asarray(r),np.asarray(r0)
     R = norm(r-r0)
-    return 1/(2*np.pi*R)*np.exp(1j*k*R)
-
+    return 1/4. * complex(yn(0,k*R),-1*jn(0,k*R))
 def deltaGreen(r,r0,k):
     """gradient de la fonction de Green 2D en fonction de r,r0 et
     du nombre d'onde k"""
     r,r0 = np.asarray(r),np.asarray(r0)
     R = norm(r-r0)
-    return 1/(2*np.pi*R**3)*(r-r0)*(R**2-1)*np.exp(1j*k*R)
+    return k*(r-r0)/(4*R)*complex(-1*yn(1,k*R),jn(1,k*R))
 
 def get_AB(points,elements,normal,source,amplitude,omega,c=340):
     """Renvoie les matrices A et B en fonction de:
@@ -65,11 +65,36 @@ def calcul_pression_source_ponctuelle(x,r,ps,source,amplitude,elements,points,no
         -c:         vitesse du son dans le milieu"""
     k = omega/c
     x = np.asarray(x)
-    y = amplitude*Green(x,source,k)
-    y = 0
+    y = amplitude*bemf.green(x,source,k)
+    #y = 0
     for i,o in enumerate(elements):
         a,b = points[o]
         aire = norm(b-a)
         n = normal[i]
-        y -= ps[i] *aire*(np.dot(deltaGreen(x,r[i],k),n)) #vectoriser
+        y -= ps[i] *aire*(np.dot(bemf.gradgreen(x,r[i],k),n)) #vectoriser
     return y
+
+def pression_omega(zz,ps,source,elements,points,n,omega,r):
+    y = []
+    for elm in zz:
+        y.append(calcul_pression_source_ponctuelle(elm,r,ps,source,1,elements,points,n,omega))
+    return np.asarray(y)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        

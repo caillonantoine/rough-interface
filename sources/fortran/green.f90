@@ -7,18 +7,10 @@ real, intent(in), dimension(2) :: r0
 real, intent(in) :: k
 complex, intent(out) :: y
 
-!Création des variables temporaires
 real :: dist
-real:: pi
-
-pi=4*atan(real(1))
 
 dist = norm2(r-r0)
 
-y = cexp(complex(0,k*dist))/(2*pi*dist)
-
-if (r(1) == r0(1) .and. r(2) == r0(1)) then
-	y = complex(0,0)
-end if
+y = 1/4. * complex(bessel_yn(0,k*dist),-1*bessel_jn(0,k*dist))
 
 end subroutine green
