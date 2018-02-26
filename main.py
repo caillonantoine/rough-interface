@@ -1,43 +1,34 @@
 #coding:utf-8
 from __future__ import division
-from sources import affichage, bem, bemf, geometry
+from sources import affichage, bemf, geometry
 from scipy.linalg import solve
 import numpy as np
 import matplotlib.pyplot as plt
-from time import time
 
-points,elements = geometry.import_gmsh('/home/antoine/untitled.msh')
+#Importation de la géométrie
+points,elements = geometry.import_gmsh('rough_1_s.msh')
 
-#points = np.asarray(zip(np.linspace(0,5,100),np.zeros(100)))
-#elements = np.array([[i,i+1] for i in range(99)])
-   
-source = np.array([2,3])
-n,(x,y) = geometry.compute_normal(elements,points,source)
-f = 600
-omega = 2*np.pi*f
+#Définition des paramètres du problème
 
+source = np.array([2,3]) #Position de la source
+n,(x,y) = geometry.compute_normal(elements,points,source) #Calcul des normales
+f = 600 #Définition de la fréquence d'émission
+omega = 2*np.pi*f #Conversion en fréquence angulaire
+
+#On affiche la configuration
 affichage.show_all(points,n,x,y,source)
 
+#On récupère les matrices A,B et les centres des élements
 A,B,r = bemf.get_ab(points,elements,n,source,omega)
 
-B = solve(.5*np.eye(len(A)) + A, B)
+#On résout la pression à la surface
+ps = solve(.5*np.eye(len(A)) + A, B)
 
-
-res = 200
 #Discrétisation du domaine Omega
-x = np.linspace(-2,6,res)
-y = np.linspace(-4,4,res)
+zz,res = geometry.discretisation_omega([-2,6,-2,6],200)
 
-xx,yy = np.meshgrid(x,y)
+#Calcul de la pression en tout point de la discrétisation de OMEGA
+pression = bemf.pression_omega(zz,r,ps,source,elements,points,n,omega)
 
-xx = xx.reshape(res*res)
-yy = yy.reshape(res*res)
-
-zz = zip(xx,yy)
-z = zip(x,np.zeros(len(x)))
-
-pression = bemf.pression_omega(zz,r,B,source,elements,points,n,omega)
-
-plt.imshow(np.real(pression.reshape([res,res])),origin='lower')
-plt.colorbar()
-plt.show()
+#Affichage de la cartographie
+affichage.cartographie(pression,res,[-2,6,-2,6],points)

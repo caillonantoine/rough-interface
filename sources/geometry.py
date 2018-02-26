@@ -44,3 +44,16 @@ def compute_normal(elements,points,centre):
         x.append((a[0]+b[0])/2)
         y.append((a[1]+b[1])/2)
     return -np.asarray(n),np.asarray([x,y])
+
+def discretisation_omega(extent,res):
+    a,b,c,d = extent
+    x = np.linspace(a,b,res)
+    y = np.linspace(c,d,res)
+    
+    xx,yy = np.meshgrid(x,y)
+    
+    xx = xx.reshape(res*res)
+    yy = yy.reshape(res*res)
+    
+    zz = zip(xx,yy)
+    return zz,res
