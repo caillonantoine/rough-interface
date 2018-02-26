@@ -9,7 +9,7 @@ real, intent(out) :: centre(N,2)
 
 real :: k, a(2), b(2), rj(2)
 integer :: i,j
-complex :: gradient(2)
+complex :: gradient(2),dot
 k = omega / 340.
 
 do i=1,N
@@ -25,7 +25,7 @@ do i=1,N
 			rj = (a+b)/2
 			
 			call gradgreen(centre(i,:),rj,k,gradient)
-			Am(i,j) = norm2(b-a)*(dot_product(gradient,normal(j,:)))
+			Am(i,j) = norm2(b-a)*(dot(gradient,normal(j,:)))
 		endif
 	enddo
 	call green(centre(i,:),source,k,Bm(i))

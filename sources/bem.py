@@ -42,8 +42,8 @@ def get_AB(points,elements,normal,source,amplitude,omega,c=340):
                 a,b = points[elm_j]
                 rj = (a+b)/2
                 aire = norm(a-b)
-                A[i,j] = aire*(np.dot(deltaGreen(r[i],rj,k),normal[j]))
-        B[i] = amplitude*Green(r[i],source,k)
+                A[i,j] = aire*(np.dot(bemf.gradgreen(r[i],rj,k),normal[j]))
+        B[i] = amplitude*bemf.green(r[i],source,k)
     return A,B,r
 
 def calcul_pression_surface(A,B):
@@ -73,15 +73,6 @@ def calcul_pression_source_ponctuelle(x,r,ps,source,amplitude,elements,points,no
         n = normal[i]
         y -= ps[i] *aire*(np.dot(bemf.gradgreen(x,r[i],k),n)) #vectoriser
     return y
-
-def pression_omega(zz,ps,source,elements,points,n,omega,r):
-    y = []
-    for elm in zz:
-        y.append(calcul_pression_source_ponctuelle(elm,r,ps,source,1,elements,points,n,omega))
-    return np.asarray(y)
-        
-        
-        
         
         
         

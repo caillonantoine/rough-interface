@@ -20,9 +20,10 @@ affichage.show_all(points,n,x,y,source)
 
 A,B,r = bemf.get_ab(points,elements,n,source,omega)
 
-#B = solve(.5*np.eye(len(A)) + A, B)
-bemf.solve_pression(A,B)
-res = 100
+B = solve(.5*np.eye(len(A)) + A, B)
+
+
+res = 200
 #Discrétisation du domaine Omega
 x = np.linspace(-2,6,res)
 y = np.linspace(-4,4,res)
@@ -35,7 +36,7 @@ yy = yy.reshape(res*res)
 zz = zip(xx,yy)
 z = zip(x,np.zeros(len(x)))
 
-pression = bem.pression_omega(zz,B,source,elements,points,n,omega,r)
+pression = bemf.pression_omega(zz,r,B,source,elements,points,n,omega)
 
 plt.imshow(np.real(pression.reshape([res,res])),origin='lower')
 plt.colorbar()

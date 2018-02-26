@@ -1,12 +1,12 @@
 CC = f2py
 CC2 = gfortran
-FLAG = -llapack
+FLAG = 
 SOURCES =\
 	get_ab.f90 \
-	gradgreen.f90 \
-	green.f90 \
+	gradgreen.o \
+	green.o \
 	pression_omega.f90\
-	solve_pression.f90
+	dot.o
 
 module: bemf
 	mv bemf.so ../bemf.so
