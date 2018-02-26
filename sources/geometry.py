@@ -1,5 +1,5 @@
 #coding:utf-8
-
+from __future__ import division
 import numpy as np
 from numpy.linalg import norm
 
@@ -27,6 +27,20 @@ def import_gmsh(name):
         if int(temp[1]) != 15:
             elm.append([x-1,y-1])
     return np.array(node),np.array(elm)
+
+def rough_1_s(h,l,res):
+    x = np.linspace(-10,10,res)
+    y = np.zeros(res)
+    l = l/2
+    for i,elm in enumerate(x):
+        if elm > -l and elm < l:
+            if elm <= 0:
+                y[i] = h + elm*h/l
+            else:
+                y[i] = h - elm*h/l
+    return np.array([[x[i],y[i]] for i in range(len(x))]),\
+                     np.array([[i,i+1] for i in range(len(x)-1)])
+    
 
 def compute_normal(elements,points,centre):
     """Calcule les normales orientées vers centre de tous les elements.
@@ -57,3 +71,26 @@ def discretisation_omega(extent,res):
     
     zz = zip(xx,yy)
     return zz,res
+
+def discretisation_cercle(centre,rayon,resolution):
+    theta = np.linspace(0,2*np.pi,resolution)
+    points = rayon*np.array([[np.cos(elm),np.sin(elm)] for elm in theta])
+    return points + np.asarray(centre),theta
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

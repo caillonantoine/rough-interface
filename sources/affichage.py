@@ -15,9 +15,24 @@ def show_all(points,n,x,y,source=None):
     plt.quiver(x,y,n[:,0],n[:,1],width=0.005)
     plt.show()
     
-def cartographie(pression, res, extent, points):
-    plt.imshow(np.real(pression.reshape([res,res])), extent=extent, origin='lower')
+def cartographie(pression, res, extent, points,\
+                 title='Pression'):
+    plt.imshow(np.real(pression.reshape([res,res])), extent=extent,\
+               origin='lower')
     plt.plot(points[:,0],points[:,1],'r.')
     plt.axis(extent)
     plt.colorbar()
+    plt.title(title + ' reelle')
+    plt.show()
+    plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
+               origin='lower')
+    plt.plot(points[:,0],points[:,1],'b.')
+    plt.axis(extent)
+    plt.colorbar()
+    plt.title(title + ' absolue')
+    plt.show()
+    
+def polar_plot(directivite,theta,title='Directivite de la configuration'):
+    plt.polar(theta,abs(directivite))
+    plt.title(title)
     plt.show()
