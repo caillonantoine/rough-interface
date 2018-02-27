@@ -6,8 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.linalg import solve
 
-#On vérifie combien de processeurs sont disponibles
-print "{} processeur(s) disponible(s)".format(bemf.check_core())
+affichage.introduction('plane')
 
 #Création de la géométrie
 points,elements = geometry.rough_1_s(.5,1,200)
@@ -36,7 +35,7 @@ zz,res = geometry.discretisation_omega(axis,200)
 pression = timeit(bemf.pression_omega_plan)(zz,r,ps,source,angle,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points)
+affichage.cartographie(pression,res,axis,points,amplitude=.05)
 
 #Discrétisation d'un cercle
 cercle,theta = geometry.discretisation_cercle([0,0],2,1000)

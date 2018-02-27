@@ -1,7 +1,14 @@
 #coding:utf-8
 import matplotlib.pyplot as plt
 import numpy as np
+import bemf
 
+def introduction(onde):
+    print "Simulation de la réflexion d'une onde {} à une interface rugueuse."\
+    .format(onde)
+    print "{} processeur(s) utilisé(s)".format(bemf.check_core())
+    print "\n"
+    print "Représentation de la configuration"
 
 def show(points,source):
     """Affiche dans un plot tous les points contenus dans points"""
@@ -16,16 +23,16 @@ def show_all(points,n,x,y,source=None):
     plt.show()
     
 def cartographie(pression, res, extent, points,\
-                 title='Pression'):
+                 title='Pression',amplitude=1):
     plt.imshow(np.real(pression.reshape([res,res])), extent=extent,\
-               origin='lower',vmin=-.2, vmax=.2)
+               origin='lower',vmin=-amplitude, vmax=amplitude)
     plt.plot(points[:,0],points[:,1],'r.')
     plt.axis(extent)
     plt.colorbar()
     plt.title(title + ' reelle')
     plt.show()
     plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
-               origin='lower',vmin=-.2, vmax=.2)
+               origin='lower',vmin=-amplitude, vmax=amplitude)
     plt.plot(points[:,0],points[:,1],'b.')
     plt.axis(extent)
     plt.colorbar()
