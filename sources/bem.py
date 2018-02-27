@@ -1,4 +1,16 @@
-#coding:utf-8
+#coding:utf-8##################################################################################
+#                                                                                             #
+#                                                                                             #
+#                                                                                             #
+#                                                                                             #
+#                 ATTENTION, BEM.PY EST JUSTE LA POUR FAIRE JOLI,                             #
+#                      IL EST REMPLACé PAR BEMF (FORTRAN)                                     #
+#                                                                                             #
+#                                                                                             #
+#                                                                                             #
+#                                                                                             #
+###############################################################################################
+
 import bemf
 
 from numpy.linalg import norm,solve
