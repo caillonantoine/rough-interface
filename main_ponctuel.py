@@ -10,10 +10,10 @@ from scipy.linalg import solve
 print "{} processeur(s) disponible(s)".format(bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.5,2,100)
+points,elements = geometry.rough_p_s(.5,1,200,10)
 
 #Définition des paramètres du problème
-source = np.array([0,3]) #Position de la source
+source = np.array([-2,3]) #Position de la source
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 f = 400 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire

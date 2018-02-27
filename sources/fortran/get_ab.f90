@@ -30,5 +30,4 @@ do i=1,N
 	enddo
 	call green(centre(i,:),source,k,Bm(i))
 enddo
-
 end subroutine get_ab

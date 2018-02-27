@@ -5,9 +5,8 @@ integer, intent(out) :: n
 n = 0
 
 !$OMP PARALLEL
-!$OMP CRITICAL
+!$OMP ATOMIC
 n = n+1
-!$OMP END CRITICAL
 !$OMP END PARALLEL
 
 end subroutine check_core
