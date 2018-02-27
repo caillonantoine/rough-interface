@@ -18,14 +18,14 @@ def show_all(points,n,x,y,source=None):
 def cartographie(pression, res, extent, points,\
                  title='Pression'):
     plt.imshow(np.real(pression.reshape([res,res])), extent=extent,\
-               origin='lower')
+               origin='lower',vmin=-.2, vmax=.2)
     plt.plot(points[:,0],points[:,1],'r.')
     plt.axis(extent)
     plt.colorbar()
     plt.title(title + ' reelle')
     plt.show()
     plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
-               origin='lower')
+               origin='lower',vmin=-.2, vmax=.2)
     plt.plot(points[:,0],points[:,1],'b.')
     plt.axis(extent)
     plt.colorbar()
