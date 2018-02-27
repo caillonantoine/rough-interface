@@ -6,13 +6,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.linalg import solve
 
-#Création de la géométrie
+#On vérifie combien de processeurs sont disponibles
+print "{} processeur(s) disponible(s)".format(bemf.check_core())
 
-#points,elements = geometry.import_gmsh('rough_1_s.msh')
-points,elements = geometry.rough_random(.2,500,10)
+#Création de la géométrie
+points,elements = geometry.rough_1_s(.5,2,100)
 
 #Définition des paramètres du problème
-
 source = np.array([0,3]) #Position de la source
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 f = 400 #Définition de la fréquence d'émission
@@ -29,7 +29,7 @@ ps = solve(.5*np.eye(len(A)) + A, B)
 
 #Discrétisation du domaine Omega
 axis = [-5,5,-2,8]
-zz,res = geometry.discretisation_omega(axis,300)
+zz,res = geometry.discretisation_omega(axis,200)
 
 #Calcul de la pression en tout point de la discrétisation de OMEGA
 pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
@@ -38,7 +38,7 @@ pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
 affichage.cartographie(pression,res,axis,points)
 
 #Discrétisation d'un cercle
-cercle,theta = geometry.discretisation_cercle([0,0],6,1000)
+cercle,theta = geometry.discretisation_cercle([0,0],5,1000)
 
 #Calcul de la directivité de la configuration
 directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)

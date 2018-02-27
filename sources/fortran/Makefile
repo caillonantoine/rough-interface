@@ -1,13 +1,14 @@
 CC = f2py --quiet
 CC2 = gfortran
 OPENMP = --f90flags='-fopenmp' -lgomp
-LAPACK = -llapack
+LAPACK = 
 SOURCES =\
 	get_ab.f90 \
 	gradgreen.o \
 	green.o \
 	pression_omega.f90\
-	dot.o
+	dot.o \
+	check_core.f90
 
 module: bemf
 	mv bemf.so ../bemf.so
