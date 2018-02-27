@@ -13,7 +13,7 @@ print "{} processeur(s) disponible(s)".format(bemf.check_core())
 points,elements = geometry.rough_1_s(.5,1,200)
 
 #Définition des paramètres du problème
-source = np.array([-5,0]) #Position de la source
+source = np.array([-20,20]) #Position de la source
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 f = 400 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
