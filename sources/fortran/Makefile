@@ -1,6 +1,7 @@
-CC = f2py
+CC = f2py --quiet
 CC2 = gfortran
-FLAG = 
+OPENMP = --f90flags='-fopenmp' -lgomp
+LAPACK = -llapack
 SOURCES =\
 	get_ab.f90 \
 	gradgreen.o \
@@ -12,10 +13,10 @@ module: bemf
 	mv bemf.so ../bemf.so
 
 bemf: $(SOURCES)
-	$(CC) $(FLAG) -c $^ -m $@
+	$(CC) $(OPENMP) -c $^ -m $@
 
 %.o: %.f90
-	$(CC2) $(FLAG) -c $^ -o $@
+	$(CC2) $(LAPACK) -c $^ -o $@
 
 clear:
 	rm *.o *.so

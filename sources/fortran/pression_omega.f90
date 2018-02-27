@@ -13,8 +13,11 @@ integer :: i,j
 real :: k,aire,a(2),b(2)
 k = omega / 340
 
+!On paralélise le processus de calcul de la pression
+!$OMP PARALLEL
+!$OMP DO PRIVATE(a,b,aire,gradient)
 do j=1,O
-	call green(x(j,:),source,k,y(j))
+	!call green(x(j,:),source,k,y(j))
 	do i=1,N
 		a = points(elements(i,1)+1,:)
 		b = points(elements(i,2)+1,:)
@@ -23,6 +26,8 @@ do j=1,O
 		y(j) = y(j) - ps(i)*aire*dot(gradient,normal(i,:))
 	enddo
 enddo
+!$OMP END DO
+!$OMP END PARALLEL
 
 
 end subroutine pression_omega

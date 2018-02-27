@@ -29,6 +29,7 @@ def import_gmsh(name):
     return np.array(node),np.array(elm)
 
 def rough_1_s(h,l,res):
+    """Crée une interface avec une singularité de hauteur h et de longueur l"""
     x = np.linspace(-10,10,res)
     y = np.zeros(res)
     l = l/2
@@ -38,7 +39,28 @@ def rough_1_s(h,l,res):
                 y[i] = h + elm*h/l
             else:
                 y[i] = h - elm*h/l
-    return np.array([[x[i],y[i]] for i in range(len(x))]),\
+    return np.array(zip(x,y)),\
+                     np.array([[i,i+1] for i in range(len(x)-1)])
+                     
+def rough_p_s(h,l,res,size):
+    """Crée une interface de hauteur h, largeur l, longueur size"""
+    x = np.linspace(-size,size,res)
+    x_ = np.linspace(-size,size,res)
+    y = np.zeros(res)
+    for i,elm in enumerate(x):
+        elm %= l
+        elm -= l/2
+        if elm < 0:
+            y[i] = h + elm*h/l
+        else:
+            y[i] = h - elm*h/l
+    return np.array(zip(x_,y)),\
+                     np.array([[i,i+1] for i in range(len(x_)-1)])
+                     
+def rough_random(h,res,size):
+    x = np.linspace(-size,size,res)
+    y = np.random.random(len(x))*h
+    return np.array(zip(x,y)),\
                      np.array([[i,i+1] for i in range(len(x)-1)])
     
 
@@ -60,6 +82,7 @@ def compute_normal(elements,points,centre):
     return -np.asarray(n),np.asarray([x,y])
 
 def discretisation_omega(extent,res):
+    """Discrétise un rectangle extent en res*res points"""
     a,b,c,d = extent
     x = np.linspace(a,b,res)
     y = np.linspace(c,d,res)
@@ -73,7 +96,8 @@ def discretisation_omega(extent,res):
     return zz,res
 
 def discretisation_cercle(centre,rayon,resolution):
-    theta = np.linspace(0,2*np.pi,resolution)
+    """Discrétise un demi cercle de rayon 'rayon' en 'resolution' points"""
+    theta = np.linspace(0,np.pi,resolution)
     points = rayon*np.array([[np.cos(elm),np.sin(elm)] for elm in theta])
     return points + np.asarray(centre),theta
     
