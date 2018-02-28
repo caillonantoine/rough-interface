@@ -9,7 +9,7 @@ from scipy.linalg import solve
 affichage.introduction('plane')
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.5,1,200)
+points,elements = geometry.rough_p_s(.5,1,400,20)
 
 #Définition des paramètres du problème
 source = np.array([-20,20]) #Position de la source
@@ -38,7 +38,7 @@ pression = timeit(bemf.pression_omega_plan)(zz,r,ps,source,angle,elements,points
 affichage.cartographie(pression,res,axis,points,amplitude=.05)
 
 #Discrétisation d'un cercle
-cercle,theta = geometry.discretisation_cercle([0,0],2,1000)
+cercle,theta = geometry.discretisation_cercle([0,0],3,1000)
 
 #Calcul de la directivité de la configuration
 directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)

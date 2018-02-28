@@ -9,7 +9,7 @@ from scipy.linalg import solve
 affichage.introduction('sphérique')
 
 #Création de la géométrie
-points,elements = geometry.rough_p_s(.5,1,200,10)
+points,elements = geometry.rough_1_s(.5,1,300)
 
 #Définition des paramètres du problème
 source = np.array([-2,3]) #Position de la source
@@ -34,7 +34,7 @@ zz,res = geometry.discretisation_omega(axis,200)
 pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points,amplitude=.2)
+affichage.cartographie(pression,res,axis,points,amplitude=.10)
 
 #Discrétisation d'un cercle
 cercle,theta = geometry.discretisation_cercle([0,0],5,1000)

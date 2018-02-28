@@ -1,3 +1,3 @@
-cd sources/fortran
+cd sources
 make
-cd ../..
+cd ..

@@ -1,7 +1,7 @@
 CC = f2py --quiet
 CC2 = gfortran
 OPENMP = --f90flags='-fopenmp' -lgomp
-LAPACK = 
+LAPACK = -llapack
 SOURCES =\
 	check_core.f90\
 	dot.o \
@@ -13,17 +13,14 @@ SOURCES =\
 	pression_omega.f90\
 	pression_omega_plan.f90 \
 
-module: bemf
-	mv bemf.so ../bemf.so
-
-bemf: $(SOURCES)
-	$(CC) $(OPENMP) -c $^ -m $@
+bemf.so: $(SOURCES)
+	$(CC) $(OPENMP) -c $^ -m bemf
 
 %.o: %.f90
-	$(CC2) $(LAPACK) -c $^ -o $@
+	$(CC2) -c $^ -o $@
 
 clear:
-	rm *.o *.so
+	rm *.o *.so *.pyc
 
 debug: $(SOURCES)
 	$(CC2) $^ -o $@
