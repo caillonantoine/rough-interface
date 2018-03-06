@@ -1,20 +1,25 @@
 #coding:utf-8
 from __future__ import division
-from sources import bemf,geometry,affichage
-from sources.timeit import timeit
-import numpy as np
-import matplotlib.pyplot as plt
+from os import system as cmd
+cmd("./compile.sh") #On compile le module fortran si ce n'est pas fait
+from fortran import bemf
+from modules import geometry,affichage
+from modules.timeit import timeit
 from scipy.linalg import solve
+import matplotlib.pyplot as plt
+import numpy as np
 
-affichage.introduction('sphérique')
+cmd("./compile.sh") #On compile le module fortran si ce n'est pas fait
+
+affichage.introduction('sphérique',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.5,1,300)
+points,elements = geometry.rough_1_s(.25,.25,500)
 
 #Définition des paramètres du problème
 source = np.array([-2,3]) #Position de la source
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
-f = 400 #Définition de la fréquence d'émission
+f = 100 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
 
 #On affiche la configuration
@@ -34,7 +39,7 @@ zz,res = geometry.discretisation_omega(axis,200)
 pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points,amplitude=.3)
+affichage.cartographie(pression,res,axis,points,amplitude=.1)
 
 #Discrétisation d'un cercle
 cercle,theta = geometry.discretisation_cercle([0,0],5,1000)

@@ -1,3 +1,3 @@
-cd sources
+cd fortran
 make
 cd ..

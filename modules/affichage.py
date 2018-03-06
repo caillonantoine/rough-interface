@@ -1,12 +1,11 @@
 #coding:utf-8
 import matplotlib.pyplot as plt
 import numpy as np
-import bemf
 
-def introduction(onde):
+def introduction(onde,n):
     print "Simulation de la réflexion d'une onde {} à une interface rugueuse."\
     .format(onde)
-    print "{} processeur(s) utilisé(s)".format(bemf.check_core())
+    print "{} processeur(s) utilisé(s)".format(n)
     print "\n"
     print "Représentation de la configuration"
 

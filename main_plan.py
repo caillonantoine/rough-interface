@@ -1,15 +1,18 @@
 #coding:utf-8
 from __future__ import division
-from sources import bemf,geometry,affichage
-from sources.timeit import timeit
-import numpy as np
-import matplotlib.pyplot as plt
+from os import system as cmd
+cmd("./compile.sh") #On compile le module fortran si ce n'est pas fait
+from fortran import bemf
+from modules import geometry,affichage
+from modules.timeit import timeit
 from scipy.linalg import solve
+import matplotlib.pyplot as plt
+import numpy as np
 
-affichage.introduction('plane')
+affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_p_s(.25,.5,600,10)
+points,elements = geometry.rough_p_s(.25,.25,600,10)
 
 #Définition des paramètres du problème
 source = np.array([-20,20]) #Position de la source
