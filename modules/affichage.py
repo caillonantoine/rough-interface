@@ -6,7 +6,6 @@ def introduction(onde,n):
     print "Simulation de la réflexion d'une onde {} à une interface rugueuse."\
     .format(onde)
     print "{} processeur(s) utilisé(s)".format(n)
-    print "\n"
     print "Représentation de la configuration"
 
 def show(points,source):
