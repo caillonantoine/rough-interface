@@ -34,7 +34,7 @@ zz,res = geometry.discretisation_omega(axis,200)
 pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points,amplitude=.10)
+affichage.cartographie(pression,res,axis,points,amplitude=.3)
 
 #Discrétisation d'un cercle
 cercle,theta = geometry.discretisation_cercle([0,0],5,1000)

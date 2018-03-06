@@ -9,7 +9,7 @@ real, intent(out) :: centre(N,2)
 
 real :: k, a(2), b(2), rj(2)
 integer :: i,j
-complex :: gradient(2),dot
+complex :: gradienta(2),gradientb(2),gradientc(2),dot
 k = omega / 340.
 
 do i=1,N
@@ -18,14 +18,17 @@ do i=1,N
 	centre(i,:) = (a+b)/2.
 	do j=1,N
 		if (i==j) then
-			Am(i,j) = complex(0,0)
+			Am(i,j) = complex(0,0) ! DOIT ETRE CALCULE, CAR NON EGAL A 0 + 0j
 		else
 			a = points(elements(j,1)+1,:)
 			b = points(elements(j,2)+1,:)
 			rj = (a+b)/2
 			
-			call gradgreen(centre(i,:),rj,k,gradient)
-			Am(i,j) = norm2(b-a)*(dot(gradient,normal(j,:)))
+			call gradgreen(centre(i,:),a,k,gradienta)
+			call gradgreen(centre(i,:),b,k,gradientb)
+			call gradgreen(centre(i,:),rj,k,gradientc)
+
+			Am(i,j) = norm2(b-a)/6*(dot(gradienta + gradientb + gradientc,normal(j,:))) !METHODE DE SIMPSON
 		endif
 	enddo
 	call green(centre(i,:),source,k,Bm(i))

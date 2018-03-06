@@ -9,12 +9,12 @@ from scipy.linalg import solve
 affichage.introduction('plane')
 
 #Création de la géométrie
-points,elements = geometry.rough_p_s(.5,1,400,20)
+points,elements = geometry.rough_p_s(.25,.5,600,10)
 
 #Définition des paramètres du problème
 source = np.array([-20,20]) #Position de la source
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
-f = 400 #Définition de la fréquence d'émission
+f = 80 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
 angle = -np.pi/8.
 

@@ -9,7 +9,7 @@ real, intent(out) :: centre(N,2)
 
 real :: k, a(2), b(2), rj(2)
 integer :: i,j
-complex :: gradient(2),dot
+complex :: gradienta(2),gradientb(2),gradientc(2),dot
 k = omega / 340.
 
 do i=1,N
@@ -24,8 +24,11 @@ do i=1,N
 			b = points(elements(j,2)+1,:)
 			rj = (a+b)/2
 			
-			call gradgreen(centre(i,:),rj,k,gradient)
-			Am(i,j) = norm2(b-a)*(dot(gradient,normal(j,:)))
+			call gradgreen(centre(i,:),a,k,gradienta)
+			call gradgreen(centre(i,:),b,k,gradientb)
+			call gradgreen(centre(i,:),rj,k,gradientc)
+
+			Am(i,j) = norm2(b-a)/6*(dot(gradienta + gradientb + gradientc,normal(j,:))) !METHODE DE SIMPSON
 		endif
 	enddo
 	call green_plan(centre(i,:),source,k,teta,Bm(i))
