@@ -28,9 +28,9 @@ def import_gmsh(name):
             elm.append([x-1,y-1])
     return np.array(node),np.array(elm)
 
-def rough_1_s(h,l,res):
+def rough_1_s(h,l,res,size):
     """Crée une interface avec une singularité de hauteur h et de longueur l"""
-    x = np.linspace(-10,10,res)
+    x = np.linspace(-size,size,res)
     y = np.zeros(res)
     l = l/2
     for i,elm in enumerate(x):
@@ -79,7 +79,7 @@ def compute_normal(elements,points,centre):
         n[-1] = n[-1]/norm(n[-1])
         x.append((a[0]+b[0])/2)
         y.append((a[1]+b[1])/2)
-    return np.asarray(n),np.asarray([x,y])
+    return -np.asarray(n),np.asarray([x,y])
 
 def discretisation_omega(extent,res):
     """Discrétise un rectangle extent en res*res points"""

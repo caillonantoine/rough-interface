@@ -13,12 +13,11 @@ cmd("./compile.sh") #On compile le module fortran si ce n'est pas fait
 affichage.introduction('sphérique',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.2,.5,1000)
+points,elements = geometry.rough_1_s(1,2,300,10)
+n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
 #Définition des paramètres du problème
 source = np.array([-2,3]) #Position de la source
-n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
-n=-n
 f = 500 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
 
@@ -41,7 +40,7 @@ zz,res = geometry.discretisation_omega(axis,200)
 pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points,amplitude=.1)
+affichage.cartographie(pression,res,axis,points,amplitude=.2)
 
 #Discrétisation d'un cercle
 cercle,theta = geometry.discretisation_cercle([0,0],5,1000)

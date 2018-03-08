@@ -11,11 +11,11 @@ import numpy as np
 affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_p_s(.25,.25,600,10)
+points,elements = geometry.rough_1_s(1,2,300,10)
+n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
 #Définition des paramètres du problème
 source = np.array([-20,20]) #Position de la source
-n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 f = 200 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
 angle = -np.pi/8.
