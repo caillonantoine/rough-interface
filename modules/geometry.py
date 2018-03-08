@@ -79,7 +79,7 @@ def compute_normal(elements,points,centre):
         n[-1] = n[-1]/norm(n[-1])
         x.append((a[0]+b[0])/2)
         y.append((a[1]+b[1])/2)
-    return -np.asarray(n),np.asarray([x,y])
+    return np.asarray(n),np.asarray([x,y])
 
 def discretisation_omega(extent,res):
     """Discrétise un rectangle extent en res*res points"""

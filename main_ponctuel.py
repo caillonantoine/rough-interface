@@ -5,7 +5,6 @@ cmd("./compile.sh") #On compile le module fortran si ce n'est pas fait
 from fortran import bemf
 from modules import geometry,affichage
 from modules.timeit import timeit
-from scipy.linalg import solve
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -14,12 +13,13 @@ cmd("./compile.sh") #On compile le module fortran si ce n'est pas fait
 affichage.introduction('sphérique',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.25,.25,500)
+points,elements = geometry.rough_1_s(.2,.5,1000)
 
 #Définition des paramètres du problème
 source = np.array([-2,3]) #Position de la source
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
-f = 100 #Définition de la fréquence d'émission
+n=-n
+f = 500 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
 
 #On affiche la configuration
@@ -29,7 +29,9 @@ affichage.show_all(points,n,x,y,source)
 A,B,r = timeit(bemf.get_ab)(points,elements,n,source,omega)
 
 #On résout la pression à la surface
-ps = solve(.5*np.eye(len(A)) + A, B)
+#ps = solve(.5*np.eye(len(A)) + A, B)
+ps = B
+bemf.solve_ps(A,ps)
 
 #Discrétisation du domaine Omega
 axis = [-5,5,-2,8]
