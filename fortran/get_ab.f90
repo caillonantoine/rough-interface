@@ -18,7 +18,7 @@ do i=1,N
 	centre(i,:) = (a+b)/2.
 	do j=1,N
 		if (i==j) then
-			Am(i,j) = complex(0,0) ! DOIT ETRE CALCULE, CAR NON EGAL A 0 + 0j
+			Am(i,j) = complex(0,0)
 		else
 			a = points(elements(j,1)+1,:)
 			b = points(elements(j,2)+1,:)

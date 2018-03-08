@@ -32,7 +32,6 @@ def rough_1_s(h,l,res,size):
     """Crée une interface avec une singularité de hauteur h et de longueur l"""
     x = np.linspace(-size,size,res)
     y = np.zeros(res)
-    l = l/2
     for i,elm in enumerate(x):
         if elm > -l and elm < l:
             if elm <= 0:

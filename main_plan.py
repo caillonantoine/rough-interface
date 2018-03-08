@@ -11,14 +11,14 @@ import numpy as np
 affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(1,2,300,10)
+points,elements = geometry.rough_p_s(1,2,600,10)
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
 #Définition des paramètres du problème
 source = np.array([-20,20]) #Position de la source
 f = 200 #Définition de la fréquence d'émission
 omega = 2*np.pi*f #Conversion en fréquence angulaire
-angle = -np.pi/8.
+angle = -np.pi/8. #Angle d'incidence de l'onde plane
 
 #On affiche la configuration
 affichage.show_all(points,n,x,y,source)
@@ -32,7 +32,7 @@ bemf.solve_ps(A,ps)
 
 #Discrétisation du domaine Omega
 axis = [-5,5,-2,8]
-zz,res = geometry.discretisation_omega(axis,200)
+zz,res = geometry.discretisation_omega(axis,150)
 
 #Calcul de la pression en tout point de la discrétisation de OMEGA
 pression = timeit(bemf.pression_omega_plan)(zz,r,ps,source,angle,elements,points,n,omega)
