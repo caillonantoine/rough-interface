@@ -96,7 +96,7 @@ def discretisation_omega(extent,res):
 
 def discretisation_cercle(centre,rayon,resolution):
     """Discrétise un demi cercle de rayon 'rayon' en 'resolution' points"""
-    theta = np.linspace(0,np.pi,resolution)
+    theta = np.linspace(0,np.pi,resolution+2)
     points = rayon*np.array([[np.cos(elm),np.sin(elm)] for elm in theta])
     return points + np.asarray(centre),theta
     

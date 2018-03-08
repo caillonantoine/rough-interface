@@ -11,7 +11,7 @@ import numpy as np
 affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_p_s(1,2,600,10)
+points,elements = geometry.rough_p_s(1.5,1.5,600,8)
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
 #Définition des paramètres du problème
@@ -38,10 +38,10 @@ zz,res = geometry.discretisation_omega(axis,150)
 pression = timeit(bemf.pression_omega_plan)(zz,r,ps,source,angle,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points,amplitude=.05)
+affichage.cartographie(pression,res,axis,points,amplitude=.03)
 
 #Discrétisation d'un cercle
-cercle,theta = geometry.discretisation_cercle([0,0],4,1000)
+cercle,theta = geometry.discretisation_cercle([0,0],1,1000)
 
 #Calcul de la directivité de la configuration
 directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)

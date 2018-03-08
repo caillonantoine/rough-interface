@@ -17,7 +17,7 @@ k = omega / 340
 !$OMP PARALLEL
 !$OMP DO PRIVATE(a,b,aire,gradient)
 do j=1,O
-	call green_plan(x(j,:),source,k,teta,y(j))
+	!call green_plan(x(j,:),source,k,teta,y(j))
 	do i=1,N
 		a = points(elements(i,1)+1,:)
 		b = points(elements(i,2)+1,:)

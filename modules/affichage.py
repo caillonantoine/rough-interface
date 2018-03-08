@@ -40,6 +40,6 @@ def cartographie(pression, res, extent, points,\
     plt.show()
     
 def polar_plot(directivite,theta,title='Directivite de la configuration'):
-    plt.polar(theta,abs(directivite))
+    plt.polar(theta[1:-1],abs(directivite[1:-1]))
     plt.title(title)
     plt.show()
