@@ -55,6 +55,12 @@ def rough_p_s(h,l,res,size):
             y[i] = h - elm*h/l
     return np.array(zip(x_,y)),\
                      np.array([[i,i+1] for i in range(len(x_)-1)])
+
+def rough_s_s(h,lamb,res,size):
+    x = np.linspace(-size,size,res)
+    y = np.cos(2*np.pi*x/lamb)
+    return np.array(zip(x,h*y)),\
+                     np.array([[i,i+1] for i in range(len(x)-1)])
                      
 def rough_random(h,res,size):
     x = np.linspace(-size,size,res)

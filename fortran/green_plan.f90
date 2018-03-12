@@ -11,6 +11,8 @@ complex, intent(out) :: y
 r2 = r-r0
 a = k* abs(cos(teta)*r2(1) + sin(teta)*r2(2))
 
-y = 1/4. * complex(bessel_yn(0,a),-1*bessel_jn(0,a))
+!y = 1/4. * complex(bessel_yn(0,a),-1*bessel_jn(0,a))
+y = cexp(complex(0,-1*k*(cos(teta)*r(1) - sin(teta)*r(2))))
+
 
 end subroutine green_plan
