@@ -1,4 +1,5 @@
 #coding:utf-8
+from __future__ import division
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -21,6 +22,13 @@ def show_all(points,n,x,y,source=None):
     plt.grid()
     plt.show()
     
+def lisse_ou_pas_lisse(rms,f,angle):
+    print "RMS:{}, LAMBDA:{}, LAMBDA/COS(THETA)/8:{}".format(rms,340/f,340/f/np.cos(angle)/8)
+    if rms < 340/f/np.cos(angle)/8: 
+        print "Surface lisse au sens de Rayleigh"
+    else:
+        print "Surface rugueuse au sens de Rayleigh, de rugosité {}".format(rms)
+
 def cartographie(pression, res, extent, points,\
                  title='Pression',amplitude=1):
     plt.subplot(1,2,1)
