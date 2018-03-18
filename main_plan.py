@@ -11,7 +11,7 @@ import numpy as np
 affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.1,.1,1600,16)
+points,elements = geometry.rough_1_s(0.1,1.5,1600,16)
 rms = np.sqrt(sum(np.power(points[:,1],2))) #Rugosité RMS de l'interface
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 

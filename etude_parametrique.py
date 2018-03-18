@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #Définition des paramètres de l'étude
-pas = 15
+pas = 40
 
-taille_l,taille_h = .4,.4
+taille_l,taille_h = 1.7,1.7
 
 largeur = np.linspace(.001,taille_l,pas)
 hauteur = np.linspace(.001,taille_h,pas)
@@ -51,8 +51,8 @@ for i,l in enumerate(largeur):
 		if rms < 340/f/np.cos(angle)/8: 
 			critere.append(0)
 		else:
-			critere.append(1)
-		#On désalloue la mémoire pour éviter les erreurs
+			critere.append(np.nan)
+		#On libère la mémoire pour éviter les erreurs
 		
 		del points
 		del elements
@@ -68,9 +68,10 @@ critere = np.array(critere).reshape([pas,pas])
 
 plt.imshow(resultats,interpolation='bicubic',extent=[0,taille_l,0,taille_h],origin='lower')
 plt.colorbar()
-plt.contour(critere,colors='r',extent=[0,taille_l,0,taille_h])
+plt.imshow(critere,extent=[0,taille_l,0,taille_h],origin='lower',cmap='autumn')
 plt.xlabel('largeur')
 plt.ylabel('hauteur')
 plt.title('Evolution de l\'erreur en fonction de la singularite')
-plt.savefig('erreur.eps')
+plt.imsave('resultats.png',resultats,origin='lower')
+plt.imsave('alpha.png',critere,origin='lower',cmap='autumn')
 plt.show()

@@ -33,14 +33,16 @@ def cartographie(pression, res, extent, points,\
                  title='Pression',amplitude=1):
     plt.subplot(1,2,1)
     plt.imshow(np.real(pression.reshape([res,res])), extent=extent,\
-               origin='lower',vmin=-amplitude, vmax=amplitude)
+               origin='lower',vmin=-amplitude, vmax=amplitude,\
+               interpolation='bicubic')
     plt.plot(points[:,0],points[:,1],'r.')
     plt.axis(extent)
     plt.colorbar()
     plt.title('Partie reelle de la pression')
     plt.subplot(1,2,2)
     plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
-               origin='lower',vmin=-amplitude, vmax=amplitude)
+               origin='lower',vmin=-amplitude, vmax=amplitude,\
+               interpolation='bicubic')
     plt.plot(points[:,0],points[:,1],'b.')
     plt.axis(extent)
     plt.colorbar()
