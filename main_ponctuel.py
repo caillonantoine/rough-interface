@@ -11,7 +11,7 @@ import numpy as np
 affichage.introduction('sphérique',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.25,.25,300,10)
+points,elements = geometry.rough_p_s(1,1,300,10)
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
 #Définition des paramètres du problème
