@@ -13,5 +13,10 @@ def get_ab(points,elements,normales,source,omega):
 		aire = np.linalg.norm(points[a] - points[b])
 
 		for i in range(n):
-			A[i,a] += aire*(gradgreen(points[i],points[a]) + 2*gradgreen(points[i],points[milieu]))
-			A[i,b] += aire*(gradgreen(points[i],points[b]) + 2*gradgreen(points[i],points[milieu]))
+			if i != j:
+				A[i,a] += aire*(gradgreen(points[i],points[a],normales[j])\
+					+ 2*gradgreen(points[i],points[milieu],normales[j]))
+
+				A[i,b] += aire*(gradgreen(points[i],points[b],normales[j])\
+					+ 2*gradgreen(points[i],points[milieu],normales[j]))
+	A /= 6
