@@ -11,7 +11,11 @@ import numpy as np
 affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(0.1,1.5,1600,16)
+
+#points,elements = geometry.rough_1_s(0.2,1.5,1600,16)
+
+points,elements = geometry.rough_s_s(.08, .08, 1600, 16)
+
 rms = np.sqrt(sum(np.power(points[:,1],2))) #Rugosité RMS de l'interface
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
@@ -44,7 +48,7 @@ pression = timeit(bemf.pression_omega_plan)(zz,r,ps,source,angle,elements,points
 affichage.cartographie(pression,res,axis,points,amplitude=2)
 
 #Discrétisation d'un cercle
-cercle,theta = geometry.discretisation_cercle([0,.1],2,1000)
+cercle,theta = geometry.discretisation_cercle([0,.51],2,1000)
 
 #Calcul de la directivité de la configuration
 directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)

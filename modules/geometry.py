@@ -57,6 +57,7 @@ def rough_p_s(h,l,res,size):
                      np.array([[i,i+1] for i in range(len(x_)-1)])
 
 def rough_s_s(h,lamb,res,size):
+    h/=2
     x = np.linspace(-size,size,res)
     y = np.cos(2*np.pi*x/lamb)
     return np.array(zip(x,h*y)),\
