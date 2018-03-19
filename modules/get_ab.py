@@ -12,6 +12,10 @@ def green(x1,x2,k):
 	R = np.linalg.norm(x1-x2)
 	return -1j/4. * hankel1(0,k*R)
 	
+def pression(zz,points,elements,normales,source,omega):
+	pass
+
+
 def get_ab(points,elements,normales,source,omega):
 	"""Implémentation de BEM GALLERKIN"""
 	k = omega/340.
