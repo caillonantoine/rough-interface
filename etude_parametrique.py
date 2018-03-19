@@ -9,12 +9,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #Définition des paramètres de l'étude
-pas = 40
+pas = 6
 
 taille_l,taille_h = 1.7,1.7
 
-largeur = np.linspace(.001,taille_l,pas)
-hauteur = np.linspace(.001,taille_h,pas)
+largeur = np.linspace(.1,taille_l,pas)
+hauteur = np.linspace(.1,taille_h,pas)
 
 #Définition des paramètres de la configuration
 source = np.array([-20,20]) #Position de la source
@@ -31,7 +31,7 @@ pb.set_total(pas*pas)
 for i,l in enumerate(largeur):
 	for j,h in enumerate(hauteur):
 		pb.set_current(i*pas+j)
-		points,elements = geometry.rough_1_s(h,l,200,8)
+		points,elements = geometry.rough_s_s(h,l,200,8)
 		taille = len(np.nonzero(points[:,1]))
 		n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales 
 		A,B,r = bemf.get_ab_plan(points,elements,n,source,angle,omega)
