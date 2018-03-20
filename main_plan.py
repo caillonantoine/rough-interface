@@ -8,13 +8,17 @@ from modules.timeit import timeit
 import matplotlib.pyplot as plt
 import numpy as np
 
+import gc
+
 affichage.introduction('plane',bemf.check_core())
 
 #Création de la géométrie
 
 #points,elements = geometry.rough_1_s(0.2,1.5,1600,16)
 
-points,elements = geometry.rough_s_s(1.5, 1.5, 1600, 16)
+#points,elements = geometry.rough_s_s(.2, .2, 1600, 16)
+
+points,elements = geometry.rough_random(.05, .2, 1600, 16)
 
 rms = np.sqrt(sum(np.power(points[:,1],2)))/16 #Rugosité RMS de l'interface
 n,(x,y) = geometry.compute_normal(elements,points,[0,1000]) #Calcul des normales
@@ -55,3 +59,6 @@ directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)
 
 #Afichage de la directivité
 affichage.polar_plot(directivite,theta)
+
+
+gc.collect()

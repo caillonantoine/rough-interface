@@ -2,6 +2,7 @@
 from __future__ import division
 import numpy as np
 from numpy.linalg import norm
+from scipy.interpolate import interp1d
 
 def import_gmsh(name):
     """Prend en paramètre le nom du fichier '.msh'
@@ -63,9 +64,11 @@ def rough_s_s(h,lamb,res,size):
     return np.array(zip(x,h*y)),\
                      np.array([[i,i+1] for i in range(len(x)-1)])
                      
-def rough_random(h,res,size):
-    x = np.linspace(-size,size,res)
-    y = np.random.random(len(x))*h
+def rough_random(h,l,res,size):
+    x_ = np.linspace(-size, size, int(2*size/l))
+    x = np.linspace(-size, size,res)
+    y_ = np.random.rand(int(2*size/l))
+    y = interp1d(x_, y_)(x)*h
     return np.array(zip(x,y)),\
                      np.array([[i,i+1] for i in range(len(x)-1)])
     

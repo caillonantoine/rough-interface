@@ -8,6 +8,8 @@ from modules.timeit import timeit,ProgressBar
 import matplotlib.pyplot as plt
 import numpy as np
 
+import gc
+
 #Définition des paramètres de l'étude
 pas = 6
 
@@ -31,7 +33,11 @@ pb.set_total(pas*pas)
 for i,l in enumerate(largeur):
 	for j,h in enumerate(hauteur):
 		pb.set_current(i*pas+j)
-		points,elements = geometry.rough_s_s(h,l,200,8)
+
+		#points,elements = geometry.rough_s_s(h,l,200,8)
+			
+		points,elements = geometry.rough_random(h, l, 200, 8)
+
 		taille = len(np.nonzero(points[:,1]))
 		n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales 
 		A,B,r = bemf.get_ab_plan(points,elements,n,source,angle,omega)
@@ -75,3 +81,5 @@ plt.title('Evolution de l\'erreur en fonction de la singularite')
 plt.imsave('resultats.png',resultats,origin='lower')
 plt.imsave('alpha.png',critere,origin='lower',cmap='autumn')
 plt.show()
+
+gc.collect()
