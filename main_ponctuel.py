@@ -8,6 +8,8 @@ from modules.timeit import timeit
 import matplotlib.pyplot as plt
 import numpy as np
 
+import gc
+
 affichage.introduction('sphérique',bemf.check_core())
 
 #Création de la géométrie
@@ -50,3 +52,6 @@ directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)
 
 #Afichage de la directivité
 affichage.polar_plot(directivite,theta)
+
+
+gc.collect()
