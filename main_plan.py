@@ -18,7 +18,7 @@ affichage.introduction('plane',bemf.check_core())
 
 #points,elements = geometry.rough_s_s(.2, .2, 1600, 16)
 
-points,elements = geometry.rough_random(.05, .2, 1600, 16)
+points,elements = geometry.rough_random(.2, .2, 1600, 16)
 
 rms = np.sqrt(sum(np.power(points[:,1],2)))/16 #Rugosité RMS de l'interface
 n,(x,y) = geometry.compute_normal(elements,points,[0,1000]) #Calcul des normales

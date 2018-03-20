@@ -11,7 +11,7 @@ import numpy as np
 import gc
 
 #Définition des paramètres de l'étude
-pas = 6
+pas = 10
 
 taille_l,taille_h = 1.7,1.7
 
@@ -50,7 +50,7 @@ for i,l in enumerate(largeur):
 		#Calcul de la directivité de la configuration
 		directivite = bemf.pression_omega(cercle,r,ps,source,elements,points,n,omega)
 		directivite = abs(directivite)
-		directivite = (directivite - 1)
+		directivite = np.power((directivite - 1),2)
 		resultats.append(sum(abs(directivite))/1000.)
 
 		rms = np.sqrt(sum(np.power(points[:,1],2)))/taille
@@ -72,14 +72,11 @@ for i,l in enumerate(largeur):
 resultats = np.array(resultats).reshape([pas,pas])
 critere = np.array(critere).reshape([pas,pas])
 
-plt.imshow(resultats,interpolation='bicubic',extent=[0,taille_l,0,taille_h],origin='lower')
+plt.contourf(resultats,extent=[0,taille_l,0,taille_h])
 plt.colorbar()
-plt.imshow(critere,extent=[0,taille_l,0,taille_h],origin='lower',cmap='autumn')
 plt.xlabel('largeur')
 plt.ylabel('hauteur')
 plt.title('Evolution de l\'erreur en fonction de la singularite')
-plt.imsave('resultats.png',resultats,origin='lower')
-plt.imsave('alpha.png',critere,origin='lower',cmap='autumn')
 plt.show()
 
 gc.collect()
