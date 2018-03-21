@@ -1,3 +1,3 @@
-cd fortran
+cd modules
 make
 cd ..
