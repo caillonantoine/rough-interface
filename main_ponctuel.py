@@ -13,7 +13,7 @@ import gc
 affichage.introduction('sphérique',bemf.check_core())
 
 #Création de la géométrie
-points,elements = geometry.rough_1_s(.25,.25,300,10)
+points,elements = geometry.rough_1_s(0,.25,300,2)
 n,(x,y) = geometry.compute_normal(elements,points,[0,100]) #Calcul des normales
 
 #Définition des paramètres du problème
@@ -42,7 +42,7 @@ print "Cartographie:"
 pression = timeit(bemf.pression_omega)(zz,r,ps,source,elements,points,n,omega)
     
 #Affichage de la cartographie
-affichage.cartographie(pression,res,axis,points,amplitude=.2)
+affichage.cartographie(pression,res,axis,points,amplitude=.03)
 
 #Discrétisation d'un cercle
 cercle,theta = geometry.discretisation_cercle([0,0],5,1000)
