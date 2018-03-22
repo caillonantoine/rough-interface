@@ -33,6 +33,14 @@ class RoughInterfaceScattering(object):
 	def __init__(self):
 		pass
 
+	def set_interface(self,points,elements):
+		"""Permet l'ajout manuel d'une interface"""
+		self.points = points
+		self.elements = elements
+		self.rms = np.sqrt(sum(np.power(self.points[:,1],2)))/16
+		self.n,(self.x,self.y) = geometry.compute_normal(self.elements,self.points,[0,1000])
+		self.angles_interface = geometry.compute_angles(self.points, self.elements)/(2*np.pi)
+
 	def create_interface(self,type_interface,h,l,res,size):
 		"""Initialise une interface rugueuse. Le type d'interface peut être:
 			-s_unique
