@@ -14,7 +14,7 @@ affichage.show_all(points, n, x, y,source=source)
 
 omega = 2*np.pi*600
 
-A,B = get_ab.get_ab(points, elements, n, source, omega)
+A,B = bemf.get_ab(points, elements, n, source, omega)
 
 #%%
 zz,res = geometry.discretisation_omega([-5,5,-5,5],50)

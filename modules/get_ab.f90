@@ -1,36 +1,49 @@
-subroutine get_ab(points,M,elements,N,normal,source,omega,Am,Bm,centre)
+subroutine get_ab(points,M,elements,N,normales,source,omega,ksi,beta)
 implicit none
 integer, intent(in) :: M,N
-real, intent(in) :: points(M,2), normal(N,2), source(2), omega
-integer, intent(in) :: elements(N,2)
+complex, intent(out) :: ksi(N,N), beta(N)
+integer, intent(in) :: elements(M,2)
+real, intent(in) :: points(N,2), normales(M,2), source(2),omega
 
-complex, intent(out) :: Am(N,N), Bm(N)
-real, intent(out) :: centre(N,2)
+!Implémentation d'un schéma P1 de BEM
+real :: k, taille
+integer :: i,j,a,b
+complex :: dot,green,gradgreen
 
-real :: k, a(2), b(2), rj(2)
-integer :: i,j
-complex :: gradienta(2),gradientb(2),gradientc(2),dot
 k = omega / 340.
 
 do i=1,N
-	a = points(elements(i,1)+1,:)
-	b = points(elements(i,2)+1,:)
-	centre(i,:) = (a+b)/2.
-	do j=1,N
-		if (i==j) then
-			Am(i,j) = complex(0,0)
-		else
-			a = points(elements(j,1)+1,:)
-			b = points(elements(j,2)+1,:)
-			rj = (a+b)/2
-			
-			call gradgreen(centre(i,:),a,k,gradienta)
-			call gradgreen(centre(i,:),b,k,gradientb)
-			call gradgreen(centre(i,:),rj,k,gradientc)
-
-			Am(i,j) = norm2(b-a)/6*(dot(gradienta + gradientb + gradientc,normal(j,:))) !METHODE DE SIMPSON
-		endif
+	do j=1,M
+		a = elements(j,1) + 1
+		b = elements(j,2) + 1
+		taille = norm2(points(a,:) - points(b,:))
+		ksi(i,a) = ksi(i,a) + taille*(1/6. * gradgreen(points(i,:),points(a,:),k,normales(j,:)) + &
+			1/3. * gradgreen(points(i,:),(points(a,:)+points(b,:))/2.,k,normales(j,:)))
+		ksi(i,b) = ksi(i,b) + taille*(1/6. * gradgreen(points(i,:),points(b,:),k,normales(j,:)) + &
+			1/3. * gradgreen(points(i,:),(points(a,:)+points(b,:))/2.,k,normales(j,:)))
 	enddo
-	call green(centre(i,:),source,k,Bm(i))
+	beta(i) = green(points(i,:),source,k)
 enddo
+
 end subroutine get_ab
+
+!def get_ab(points,elements,normales,source,omega):
+!	"""Implémentation de BEM GALLERKIN"""
+!	k = omega/340.
+!
+!	m = len(elements)
+!	n = len(points)
+!
+!	ksi = np.zeros([n,n],dtype=complex)
+!	beta = np.zeros([n,1],dtype=complex)
+!	
+!	for i in range(n):
+!		for j in range(m):
+!			a,b = elements[j]
+!			taille = np.linalg.norm(points[b] - points[a])
+!			ksi[i,a] += taille*(1/6. * gradgreen(points[i],points[a],k,normales[j]) +\
+!							1/3. * gradgreen(points[i],(points[a]+points[b])/2,k,normales[j]))
+!			ksi[i,b] += taille*(1/6. * gradgreen(points[i],points[b],k,normales[j]) +\
+!							1/3. * gradgreen(points[i],(points[a]+points[b])/2,k,normales[j]))
+!		beta[i] = green(points[i],source,k)
+!	return ksi,beta
