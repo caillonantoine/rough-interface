@@ -6,7 +6,7 @@ from modules import get_ab,geometry,affichage,bemf
 import matplotlib.pyplot as plt
 from scipy.linalg import solve
 
-points, elements = geometry.rough_1_s(.5, .1, 100, 10)
+points, elements = geometry.rough_1_s(.5, .5, 200, 3)
 n,(x,y) = geometry.compute_normal(elements, points, [0,100])
 source = [0,5]
 
@@ -19,7 +19,8 @@ A,B = get_ab.get_ab(points, elements, n, source, omega)
 #%%
 zz,res = geometry.discretisation_omega([-5,5,-5,5],50)
 angles = get_ab.compute_angles(points,elements)/(2*np.pi)
-ps = solve(np.diag(angles) + A,B)
+#ps = solve(np.diag(angles) + A,B)
+ps = solve(.5*np.eye(len(points)) + A,B)
 
 #%%
 
