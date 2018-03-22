@@ -1,3 +1,0 @@
-cd modules
-make
-cd ..

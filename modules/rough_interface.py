@@ -1,4 +1,6 @@
 #coding:utf-8
+from os import system as cmd
+cmd('cd modules/ && make')
 import geometry, affichage, bemf
 from timeit import timeit, ProgressBar
 import numpy as np
