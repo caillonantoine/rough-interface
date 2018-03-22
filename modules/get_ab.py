@@ -17,7 +17,18 @@ def green(x1,x2,k):
 	x2 = np.asarray(x2)
 	R = np.linalg.norm(x1-x2)
 	return -1j/4. * hankel1(0,k*R)
+
+def compute_angles(points,elements):
+	angles = np.pi*np.ones(len(points))
+	for i in range(len(elements)):
+		a,b = elements[i]
+		vecteur = points[b] - points[a]
+		littleangle = np.arctan(vecteur[1]/vecteur[0])
+		angles[a] -= littleangle
+		angles[b] += littleangle
+	return angles
 	
+
 def pression(zz,ps,points,elements,normales,source,omega):
 	zz = np.asarray(zz)
 	points = np.asarray(points)
@@ -62,8 +73,7 @@ def get_ab(points,elements,normales,source,omega):
 		beta[i] = green(points[i],source,k)
 	return ksi,beta
 		
-		
-		
+
 		
 		
 		
