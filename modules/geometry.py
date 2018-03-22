@@ -90,6 +90,16 @@ def compute_normal(elements,points,centre):
         y.append((a[1]+b[1])/2)
     return -np.asarray(n),np.asarray([x,y])
 
+def compute_angles(points,elements):
+    angles = np.pi*np.ones(len(points))
+    for i in range(len(elements)):
+        a,b = elements[i]
+        vecteur = points[b] - points[a]
+        littleangle = np.arctan(vecteur[1]/vecteur[0])
+        angles[a] -= littleangle
+        angles[b] += littleangle
+    return angles
+
 def discretisation_omega(extent,res):
     """Discrétise un rectangle extent en res*res points"""
     a,b,c,d = extent

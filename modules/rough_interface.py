@@ -4,6 +4,9 @@ cmd('cd modules/ && make')
 import geometry, affichage, bemf
 from timeit import timeit, ProgressBar
 import numpy as np
+from scipy.linalg import solve
+
+import matplotlib.pyplot as plt
 
 class RoughInterfaceScattering(object):
 	"""Encapsulation de toutes les fonctions nécessaires à la
@@ -52,6 +55,7 @@ class RoughInterfaceScattering(object):
 
 		self.rms = np.sqrt(sum(np.power(self.points[:,1],2)))/16
 		self.n,(self.x,self.y) = geometry.compute_normal(self.elements,self.points,[0,1000])
+		self.angles_interface = geometry.compute_angles(self.points, self.elements)/(2*np.pi)
 
 	def set_source(self,type_onde,position):
 		"""Définit une source pour le problème. On peut choisir entre un type d'onde:
@@ -90,61 +94,56 @@ class RoughInterfaceScattering(object):
 			affichage.lisse_ou_pas_lisse(self.rms,self.f,self.angle)
 		affichage.show_all(self.points,self.n,self.x,self.y,self.source)
 		if self.type_onde == 'plane':
-			A,B,r = timeit(bemf.get_ab_plan)(self.points\
+			A,B = timeit(bemf.get_ab_plan)(self.points\
 											,self.elements\
 											,self.n\
 											,self.source\
 											,self.angle\
 											,self.omega)
 		elif self.type_onde == 'ponctuelle':
-			A,B,r = timeit(bemf.get_ab)(self.points\
+			A,B = timeit(bemf.get_ab)(self.points\
 										,self.elements\
 										,self.n\
 										,self.source\
 										,self.omega)
 		else:
 			print('Type d\'onde non compris')
-		ps = B
-		bemf.solve_ps(A,ps)
+		ps = solve(np.diag(self.angles_interface) + A,B)
 		zz,res = geometry.discretisation_omega(self.extent,self.res)
 		if self.type_onde == 'plane':
 			pression = timeit(bemf.pression_omega_plan)(zz\
-														,r\
 														,ps\
+														,self.points\
+														,self.elements\
+														,self.n\
 														,self.source\
 														,self.angle\
-														,self.elements\
-														,self.points\
-														,self.n\
 														,self.omega)
-			directivite = bemf.pression_omega(self.cercle\
-												,r\
-												,ps\
-												,self.source\
-												,self.elements\
-												,self.points\
-												,self.n\
-												,self.omega\
-												)
+			directivite = bemf.pression_omega_plan(self.cercle\
+														,ps\
+														,self.points\
+														,self.elements\
+														,self.n\
+														,self.source\
+														,self.angle\
+														,self.omega)
 		elif self.type_onde =='ponctuelle':
 			pression = timeit(bemf.pression_omega)(zz\
-													,r\
 													,ps\
-													,self.source\
-													,self.elements\
 													,self.points\
+													,self.elements\
 													,self.n\
+													,self.source\
 													,self.omega\
 													)
 			directivite = bemf.pression_omega(self.cercle\
-											,r\
-											,ps\
-											,self.source\
-											,self.elements\
-											,self.points\
-											,self.n\
-											,self.omega\
-											)
+												,ps\
+												,self.points\
+												,self.elements\
+												,self.n\
+												,self.source\
+												,self.omega\
+												)
 		affichage.cartographie(pression,res,self.extent,self.points,amplitude=self.amplitude)
 		affichage.polar_plot(directivite,self.theta)
 

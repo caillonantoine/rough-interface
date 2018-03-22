@@ -12,6 +12,7 @@ real, dimension(2) :: vecteur
 
 vecteur = r-r0
 dist = norm2(r-r0)
+
 if (dist == 0) then
 	y = complex(0,0)
 else
