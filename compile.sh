@@ -1,3 +1,0 @@
-cd fortran
-make
-cd ..
