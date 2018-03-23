@@ -17,7 +17,7 @@ k = omega/340.
 !$OMP PARALLEL
 !$OMP DO PRIVATE(j,a,b,taille,milieu)
 do i=1,O
-	yy(i) = green_plan(zz(i,:),source,k,angle)
+	!yy(i) = green_plan(zz(i,:),source,k,angle)
 	do j=1,M
 		a = elements(j,1) + 1
 		b = elements(j,2) + 1

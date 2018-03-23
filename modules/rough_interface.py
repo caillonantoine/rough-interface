@@ -95,12 +95,13 @@ class RoughInterfaceScattering(object):
 		"""Discrétise un cercle. radius = rayon, position = vecteur de deux coordonnées du centre du cercle"""
 		self.cercle,self.theta = geometry.discretisation_cercle(position,radius,1000)
 
-	def start(self):
+	def start(self,quiet=False):
 		"""Une fois les paramètres entrés, lance la simulation et affiche les différents résultats"""
-		affichage.introduction(self.type_onde, bemf.check_core())
-		if self.type_onde == 'plane':
-			affichage.lisse_ou_pas_lisse(self.rms,self.f,self.angle)
-		affichage.show_all(self.points,self.n,self.x,self.y,self.source)
+		if not quiet:
+			affichage.introduction(self.type_onde, bemf.check_core())
+			if self.type_onde == 'plane':
+				affichage.lisse_ou_pas_lisse(self.rms,self.f,self.angle)
+			affichage.show_all(self.extent,self.points,self.n,self.x,self.y,self.source)
 		if self.type_onde == 'plane':
 			A,B = timeit(bemf.get_ab_plan)(self.points\
 											,self.elements\
@@ -152,8 +153,10 @@ class RoughInterfaceScattering(object):
 												,self.source\
 												,self.omega\
 												)
-		affichage.cartographie(pression,res,self.extent,self.points,amplitude=self.amplitude)
-		affichage.polar_plot(directivite,self.theta)
+		if not quiet:
+			affichage.cartographie(pression,res,self.extent,self.points,amplitude=self.amplitude)
+			affichage.polar_plot(directivite,self.theta)
+		return pression,directivite
 
 if __name__ == '__main__':
 

@@ -15,11 +15,12 @@ def show(points,source):
     plt.plot(points[:,0],points[:,1],'.')
     plt.axis('equal')
     
-def show_all(points,n,x,y,source=None):
+def show_all(extent,points,n,x,y,source=None):
     """Affiche toute la configuration, y compris les normales aux élements"""
     show(points,source)
-    plt.quiver(x,y,-n[:,0],-n[:,1],width=0.005)
+    plt.quiver(x,y,n[:,0],n[:,1],width=0.005)
     plt.grid()
+    plt.axis(extent)
     plt.show()
     
 def lisse_ou_pas_lisse(rms,f,angle):
@@ -41,7 +42,7 @@ def cartographie(pression, res, extent, points,\
     plt.title('Partie reelle de la pression')
     plt.subplot(1,2,2)
     plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
-               origin='lower',vmin=-amplitude, vmax=amplitude,\
+               origin='lower',vmin=0, vmax=amplitude,\
                interpolation='bicubic')
     plt.plot(points[:,0],points[:,1],'b.')
     plt.axis(extent)

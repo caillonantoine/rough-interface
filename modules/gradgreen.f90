@@ -10,7 +10,7 @@ real :: dist
 real, dimension(2) :: vecteur
 
 
-vecteur = r-r0
+vecteur = r0-r
 dist = norm2(r-r0)
 
 if (dist == 0) then

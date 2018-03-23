@@ -20,4 +20,5 @@ problem.set_angle(np.pi/2)
 problem.set_omega([-10,10,-10,10],150,.01)
 problem.set_frequency(200)
 problem.set_circle(2,[0,1])
-problem.start()
+
+pression, directivite = problem.start()

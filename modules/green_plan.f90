@@ -5,13 +5,7 @@ implicit none
 real, intent(in), dimension(2) :: r
 real, intent(in), dimension(2) :: r0
 real, intent(in) :: k,teta
-real :: a,r2(2)
 complex :: y
 
-r2 = r-r0
-a = k* abs(cos(teta)*r2(1) + sin(teta)*r2(2))
-
-y = cexp(complex(0,-1*k*(cos(teta)*r(1) - sin(teta)*r(2))))
-
-
+y = cexp(complex(0,-k*sin(-teta)*r(1) - k*cos(-teta)*r(2)))
 end function green_plan
