@@ -61,7 +61,7 @@ class RoughInterfaceScattering(object):
 		elif type_interface == 's_aleatoire':
 			self.points,self.elements = geometry.rough_random(h, l, res, size)
 
-		self.rms = np.sqrt(sum(np.power(self.points[:,1],2)))/16
+		self.rms = np.sqrt(np.mean(np.power(self.points[:,1],2)))
 		self.n,(self.x,self.y) = geometry.compute_normal(self.elements,self.points,[0,1000])
 		self.angles_interface = geometry.compute_angles(self.points, self.elements)/(2*np.pi)
 

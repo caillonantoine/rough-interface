@@ -1,6 +1,6 @@
 CC = f2py --quiet
 CC2 = gfortran
-OPENMP = --f90flags='-fopenmp' -lgomp
+F2PY = --fcompiler=intelem --f90flags='-fpp -qopenmp' --opt='-fast' -DF2PY_REPORT_ON_ARRAY_COPY=1 
 SOURCES =\
 	check_core.f90\
 	dot.o \
@@ -13,10 +13,10 @@ SOURCES =\
 	pression_omega_plan.f90 \
 
 bemf.so: $(SOURCES)
-	$(CC) $(OPENMP) -c $^ -m bemf
+	$(CC) --f90flags='-fopenmp' -lgomp -c $^ -m bemf
 
 %.o: %.f90
-	$(CC2) -c $^ -o $@
+	$(CC2) -fPIC -c $^ -o $@
 
 clear:
 	rm *.o *.so *.pyc

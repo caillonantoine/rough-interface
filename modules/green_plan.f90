@@ -7,5 +7,5 @@ real, intent(in), dimension(2) :: r0
 real, intent(in) :: k,teta
 complex :: y
 
-y = cexp(complex(0,-k*sin(-teta)*r(1) - k*cos(-teta)*r(2)))
+y = cexp(cmplx(0,-k*sin(-teta)*r(1) - k*cos(-teta)*r(2)))
 end function green_plan

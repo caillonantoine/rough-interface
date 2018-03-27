@@ -12,6 +12,6 @@ real :: dist
 
 dist = norm2(r-r0)
 
-y = 1/4. * complex(bessel_yn(0,k*dist),-1*bessel_jn(0,k*dist))
+y = 1/4. * cmplx(bessel_yn(0,k*dist),-1*bessel_jn(0,k*dist))
 
 end function green

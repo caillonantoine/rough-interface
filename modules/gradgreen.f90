@@ -14,9 +14,9 @@ vecteur = r0-r
 dist = norm2(r-r0)
 
 if (dist == 0) then
-	y = complex(0,0)
+	y = cmplx(0,0)
 else
-	y = dot(k*vecteur/(4*dist)*complex(-1*bessel_yn(1,k*dist),bessel_jn(1,k*dist)),n)
+	y = dot(k*vecteur/(4*dist)*cmplx(-1*bessel_yn(1,k*dist),bessel_jn(1,k*dist)),n)
 end if
 
 end function gradgreen
