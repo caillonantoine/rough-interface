@@ -8,3 +8,4 @@ RAPPORT/
 *.o
 *.so
 *.eps
+render/
