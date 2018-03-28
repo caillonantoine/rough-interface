@@ -1,7 +1,6 @@
 DOCUMENTATION/
 RAPPORT/
 *.out
-*.png
 .floydexpt
 .floydignore
 *.pyc
