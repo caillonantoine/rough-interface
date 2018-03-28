@@ -9,3 +9,4 @@ RAPPORT/
 *.so
 *.eps
 render/
+.ipynb_checkpoints/

@@ -155,7 +155,7 @@ class RoughInterfaceScattering(object):
 												)
 		if not quiet:
 			affichage.cartographie(pression,res,self.extent,self.points,amplitude=self.amplitude)
-			affichage.polar_plot(directivite,self.theta)
+			#affichage.polar_plot(directivite,self.theta)
 		return pression,directivite
 
 if __name__ == '__main__':
