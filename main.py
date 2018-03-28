@@ -1,6 +1,6 @@
 #coding:utf-8
 import numpy as np
-from modules import rough_interface as ri
+import rough_interface as ri
 from scipy.optimize import minimize as mini
 import matplotlib.pyplot as plt
 

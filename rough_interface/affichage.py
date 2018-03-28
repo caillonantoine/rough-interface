@@ -32,7 +32,6 @@ def lisse_ou_pas_lisse(rms,f,angle):
 
 def cartographie(pression, res, extent, points,\
                  title='Pression',amplitude=1):
-    plt.subplot(1,2,1)
     plt.imshow(np.real(pression.reshape([res,res])), extent=extent,\
                origin='lower',vmin=-amplitude, vmax=amplitude,\
                interpolation='bicubic')
@@ -40,7 +39,7 @@ def cartographie(pression, res, extent, points,\
     plt.axis(extent)
     plt.colorbar()
     plt.title('Partie reelle de la pression')
-    plt.subplot(1,2,2)
+    plt.show()
     plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
                origin='lower',vmin=0, vmax=amplitude,\
                interpolation='bicubic')
