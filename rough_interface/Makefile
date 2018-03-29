@@ -13,10 +13,10 @@ SOURCES =\
 	pression_omega_plan.f90 \
 
 bemf.so: $(SOURCES)
-	$(CC) --f90flags='-fopenmp' -lgomp -c $^ -m bemf
+	$(CC) --f90flags='-fopenmp -Ofast' -lgomp -c $^ -m bemf
 
 %.o: %.f90
-	$(CC2) -fPIC -c $^ -o $@
+	$(CC2) -fPIC -Ofast -c $^ -o $@
 
 clear:
 	rm *.o *.so *.pyc
