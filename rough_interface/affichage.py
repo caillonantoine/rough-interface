@@ -34,7 +34,7 @@ def cartographie(pression, res, extent, points,\
                  title='Pression',amplitude=1):
     plt.imshow(np.real(pression.reshape([res,res])), extent=extent,\
                origin='lower',vmin=-amplitude, vmax=amplitude,\
-               interpolation='bicubic')
+               interpolation='bicubic',cmap='RdBu')
     plt.plot(points[:,0],points[:,1],'r.')
     plt.axis(extent)
     plt.colorbar()
@@ -42,7 +42,7 @@ def cartographie(pression, res, extent, points,\
     plt.show()
     plt.imshow(abs(pression.reshape([res,res])), extent=extent,\
                origin='lower',vmin=0, vmax=amplitude,\
-               interpolation='bicubic')
+               interpolation='bicubic',cmap='afmhot')
     plt.plot(points[:,0],points[:,1],'b.')
     plt.axis(extent)
     plt.colorbar()

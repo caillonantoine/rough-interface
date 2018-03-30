@@ -53,7 +53,7 @@ def pression(zz,ps,points,elements,normales,source,omega):
 
 
 def get_ab(points,elements,normales,source,omega):
-	"""Implémentation de BEM GALLERKIN"""
+	"""Implémentation de BEM P1"""
 	k = omega/340.
 
 	m = len(elements)
