@@ -26,8 +26,8 @@ class ProgressBar(object):
         current_percent = int(self.current*100/float(self.total))
         if self.percent != current_percent:
             self.percent = current_percent
-            print('{0:02d}%'.format(current_percent),end='\r')
-            sys.stdout.flush()
+            print('{0:02d}%'.format(current_percent))
+            #sys.stdout.flush()
         
 
 

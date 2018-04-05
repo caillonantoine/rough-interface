@@ -1,2 +1,2 @@
 apt-get install python-pip gfortran
-pip install numpy matplotlib scipy jupyter
+pip install numpy matplotlib scipy jupyterlab
