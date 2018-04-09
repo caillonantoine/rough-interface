@@ -18,6 +18,9 @@ def green(x1,x2,k):
 	R = np.linalg.norm(x1-x2)
 	return -1j/4. * hankel1(0,k*R)
 
+def green_plan(x,k,teta):
+    return np.exp(1j*k*(np.sin(teta)*x[0] - np.cos(teta)*x[1]))
+
 def compute_angles(points,elements):
 	angles = np.pi*np.ones(len(points))
 	for i in range(len(elements)):
